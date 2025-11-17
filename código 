@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <time.h>
+
+void bubbleSort(int arr[], int n) {
+    int i, j, temp;
+    clock_t inicioSort = clock(); // tempo inicial do bubble sort
+
+    for (i = 0; i < n - 1; i++) {
+        printf("\n--- Passo da iteração externa i = %d ---\n", i);
+
+        for (j = 0; j < n - i - 1; j++) {
+
+            clock_t inicioPasso = clock(); // tempo antes da comparação
+
+            printf("Comparando arr[%d] = %d com arr[%d] = %d\n",
+                j, arr[j], j + 1, arr[j + 1]);
+
+            if (arr[j] > arr[j + 1]) {
+                printf("→ Troca necessária! (swap)\n");
+
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+            } else {
+                printf("→ Nenhuma troca\n");
+            }
+
+            clock_t fimPasso = clock(); // tempo depois do passo
+            double tempoPasso = (double)(fimPasso - inicioPasso) * 1000000 / CLOCKS_PER_SEC;
+
+            printf("Tempo do passo: %.2f microssegundos\n", tempoPasso);
+        }
+    }
+
+    clock_t fimSort = clock(); // tempo final
+    double tempoTotal = (double)(fimSort - inicioSort) * 1000000 / CLOCKS_PER_SEC;
+
+    printf("\n=== Tempo total do Bubble Sort: %.2f microssegundos ===\n", tempoTotal);
+}
+
+int main() {
+    int numeros[3] = {5, 7, 4};
+    int n = sizeof(numeros) / sizeof(numeros[0]);
+
+    printf("Array original: %d, %d, %d\n", numeros[0], numeros[1], numeros[2]);
+
+    bubbleSort(numeros, n);
+
+    printf("\nArray ordenado (Bubble Sort): %d, %d, %d\n",
+           numeros[0], numeros[1], numeros[2]);
+
+    return 0;
+}
